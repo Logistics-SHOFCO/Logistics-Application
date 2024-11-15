@@ -52,3 +52,12 @@ function handleSubmit(event) {
         alert("Error, Did not Submit: " + error.message);
     });
 }
+document.getElementById("closeButton").addEventListener("click", function () {
+    // Confirm all data has been submitted
+    if (confirm("Are you sure you want to close this window? Make sure all data is submitted.")) {
+        window.close();
+    } else {
+        alert("Closing canceled. Please complete the submission.");
+    }
+});
+
