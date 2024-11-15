@@ -86,15 +86,6 @@ function handleSubmit(event) {
 
 document.getElementById("submissionForm").addEventListener("submit", handleSubmit);
 
-
-document.getElementById("closeButton").addEventListener("click", function () {
-    // Confirm all data has been submitted
-    if (confirm("Are you sure you want to close this window? Make sure all data is submitted.")) {
-        window.close();
-    } else {
-        alert("Closing canceled. Please complete the submission.");
-    }
-});
 // Handle form submission
 document.getElementById("myForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent the default form submission
@@ -110,14 +101,16 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
     // document.getElementById("myForm").submit(); 
 });
 
-// Close the window/tab after form submission
-document.getElementById("closeButton").addEventListener("click", function() {
+document.getElementById("closeButton").addEventListener("click", function () {
     if (confirm("Are you sure you want to close this window? Make sure all data is submitted.")) {
-        window.close();
-    } else {
-        alert("Closing canceled. Please complete the submission.");
+        if (typeof window.close === "function") {
+            window.close();
+        } else {
+            alert("Please close this tab manually.");
+        }
     }
 });
+
 
 
 
