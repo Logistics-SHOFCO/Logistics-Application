@@ -11,41 +11,6 @@ function generateBookingID() {
 window.onload = function() {
     generateBookingID();
 };
-function validateForm(event) {
-                // Prevent the form from submitting
-                event.preventDefault();
-
-                // Get form values
-                const bid = document.getElementById("bid").value;
-                const email = document.getElementById("email").value;
-                const ddate = document.getElementById("ddate").value;
-                const rdate = document.getElementById("rdate").value;
-                const passno = document.getElementById("passno").value;
-                const dest = document.getElementById("dest").value;
-                const dept = document.getElementById("dept").value;
-                const pop = document.getElementById("pop").value;
-                const tin = document.getElementById("tin").value;
-                const tout = document.getElementById("tout").value;
-                const vehicleCategory = document.getElementById("vehicle-category").value;
-                const shvList = document.getElementById("shv-list").value;
-                const hrvList = document.getElementById("hrv-list").value;
-
-                // Check if required fields are filled
-                if (!bid || !email || !ddate || !rdate || !passno || !dest || !dept || !pop || !tin || !tout || !vehicleCategory) {
-                    alert("All fields required!");
-                    return false;
-                }
-
-                // Check if a vehicle is selected based on category
-                if (vehicleCategory === "shv" && shvList === "-") {
-                    alert("Please select a SHOFCO vehicle.");
-                    return false;
-                }
-                if (vehicleCategory === "hrv" && hrvList === "-") {
-                    alert("Please select a Hire vehicle.");
-                    return false;
-                }
-            }
 
 function showVehicleList() {
     const category = document.getElementById("vehicle-category").value;
@@ -65,10 +30,41 @@ function showVehicleList() {
 function handleSubmit(event) {
     event.preventDefault(); // Prevent default form submission
 
+    // Validation logic
+    const bid = document.getElementById("bid").value;
+    const email = document.getElementById("email").value;
+    const ddate = document.getElementById("ddate").value;
+    const rdate = document.getElementById("rdate").value;
+    const passno = document.getElementById("passno").value;
+    const dest = document.getElementById("dest").value;
+    const dept = document.getElementById("dept").value;
+    const pop = document.getElementById("pop").value;
+    const tin = document.getElementById("tin").value;
+    const tout = document.getElementById("tout").value;
+    const vehicleCategory = document.getElementById("vehicle-category").value;
+    const shvList = document.getElementById("shv-list").value;
+    const hrvList = document.getElementById("hrv-list").value;
+
+    // Check if required fields are filled
+    if (!bid || !email || !ddate || !rdate || !passno || !dest || !dept || !pop || !tin || !tout || !vehicleCategory) {
+        alert("All fields are required!");
+        return false; // Stop form submission
+    }
+
+    // Check if a vehicle is selected based on category
+    if (vehicleCategory === "shv" && shvList === "-") {
+        alert("Please select a SHOFCO vehicle.");
+        return false; // Stop form submission
+    }
+    if (vehicleCategory === "hrv" && hrvList === "-") {
+        alert("Please select a Hire vehicle.");
+        return false; // Stop form submission
+    }
+
+    // If validation passes, proceed with form submission
     const form = document.getElementById("submissionForm");
     const formData = new FormData(form);
 
-    // Send form data via fetch
     fetch(form.action, {
         method: "POST",
         body: formData
@@ -87,6 +83,7 @@ function handleSubmit(event) {
         alert("Error, Did not Submit: " + error.message);
     });
 }
+
 document.getElementById("closeButton").addEventListener("click", function () {
     // Confirm all data has been submitted
     if (confirm("Are you sure you want to close this window? Make sure all data is submitted.")) {
