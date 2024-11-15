@@ -60,14 +60,5 @@ document.getElementById("closeButton").addEventListener("click", function () {
         alert("Closing canceled. Please complete the submission.");
     }
 });
-document.querySelector(".btn2").addEventListener("click", function (e) {
-    e.preventDefault(); // Prevent default form submission for testing
-    
-    // Simulate form submission
-    setTimeout(() => {
-        alert("Data submitted successfully!");
-        document.getElementById("closeButton").disabled = false; // Enable close button
-    }, 1000); // Simulate submission delay
-});
 
 
