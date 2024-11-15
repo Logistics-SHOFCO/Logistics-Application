@@ -31,14 +31,14 @@ function handleSubmit(event) {
     event.preventDefault(); // Prevent default form submission
 
     // Validation logic
-    const bid = document.getElementById("bid").value;
-    const email = document.getElementById("email").value;
+    const bid = document.getElementById("bid").value.trim();
+    const email = document.getElementById("email").value.trim();
     const ddate = document.getElementById("ddate").value;
     const rdate = document.getElementById("rdate").value;
-    const passno = document.getElementById("passno").value;
-    const dest = document.getElementById("dest").value;
-    const dept = document.getElementById("dept").value;
-    const pop = document.getElementById("pop").value;
+    const passno = document.getElementById("passno").value.trim();
+    const dest = document.getElementById("dest").value.trim();
+    const dept = document.getElementById("dept").value.trim();
+    const pop = document.getElementById("pop").value.trim();
     const tin = document.getElementById("tin").value;
     const tout = document.getElementById("tout").value;
     const vehicleCategory = document.getElementById("vehicle-category").value;
@@ -48,41 +48,44 @@ function handleSubmit(event) {
     // Check if required fields are filled
     if (!bid || !email || !ddate || !rdate || !passno || !dest || !dept || !pop || !tin || !tout || !vehicleCategory) {
         alert("All fields are required!");
-        return false; // Stop form submission
+        return; // Stop further execution
     }
 
-    // Check if a vehicle is selected based on category
+    // Check vehicle selection
     if (vehicleCategory === "shv" && shvList === "-") {
         alert("Please select a SHOFCO vehicle.");
-        return false; // Stop form submission
+        return;
     }
     if (vehicleCategory === "hrv" && hrvList === "-") {
         alert("Please select a Hire vehicle.");
-        return false; // Stop form submission
+        return;
     }
 
-    // If validation passes, proceed with form submission
+    // Form submission using fetch API
     const form = document.getElementById("submissionForm");
     const formData = new FormData(form);
 
     fetch(form.action, {
         method: "POST",
-        body: formData
+        body: formData,
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.result === "success") {
-            alert("Submitted Successfully!");
-            form.reset(); // Clear the form
-            generateBookingID(); // Regenerate booking ID
-        } else {
-            alert("Error, Did not Submit: " + data.error);
-        }
-    })
-    .catch(error => {
-        alert("Error, Did not Submit: " + error.message);
-    });
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.result === "success") {
+                alert("Submitted Successfully!");
+                form.reset();
+                generateBookingID(); // Regenerate booking ID
+            } else {
+                alert("Error, Did not Submit: " + data.error);
+            }
+        })
+        .catch((error) => {
+            alert("Error, Did not Submit: " + error.message);
+        });
 }
+
+document.getElementById("submissionForm").addEventListener("submit", handleSubmit);
+
 
 document.getElementById("closeButton").addEventListener("click", function () {
     // Confirm all data has been submitted
