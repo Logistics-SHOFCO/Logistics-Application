@@ -23,7 +23,11 @@ function showVehicleList() {
 }
 
 function handleSubmit(event) {
-    event.preventDefault(); // Prevent default form submission
+     if (event && event.preventDefault) {
+        event.preventDefault(); // Stops the default submission
+    } else {
+        event.returnValue = false; // For older mobile browsers
+    } // Prevent default form submission
 
     // Validation logic
     const bid = document.getElementById("bid").value.trim();
