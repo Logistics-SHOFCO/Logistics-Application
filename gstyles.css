@@ -51,14 +51,14 @@ img{
 }
 
 .btn1 {
-    background-color: transparent;   /* Transparent background */
-    border: 2px solid red;           /* Red outline */
-    color: red;                      /* Red text color */
-    padding: 10px 15px;
-    font-size: 14px;
+    padding: 12px 25px;
+    font-size: 16px;
+    color: #fff;
+    background-color: red;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
 /* Hover effect for btn1 */
