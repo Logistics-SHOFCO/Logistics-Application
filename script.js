@@ -1,9 +1,9 @@
 function handleCredentialResponse(response) {
     try {
         const userData = jwt_decode(response.credential);
-        const userEmail = userData.email;
+        const userEmail = userData.email || "Unavailable";
         document.getElementById("email").value = userEmail;
-        console.log("User email captured:", userEmail); // Debug
+        console.log("User email captured:", userEmail);
     } catch (error) {
         console.error("Failed to capture email:", error);
     }
@@ -14,25 +14,14 @@ function generateBookingID() {
     document.getElementById("bid").value = bookingID;
 }
 
-window.onload = function() {
-    generateBookingID();
-};
-
 function showVehicleList() {
     const category = document.getElementById("vehicle-category").value;
     const shofcoDropdown = document.getElementById("shofco-vehicles");
     const hireDropdown = document.getElementById("hire-vehicles");
-    if (category === "shv") {
-        shofcoDropdown.style.display = "block";
-        hireDropdown.style.display = "none";
-    } else if (category === "hrv") {
-        hireDropdown.style.display = "block";
-        shofcoDropdown.style.display = "none";
-    } else {
-        shofcoDropdown.style.display = "none";
-        hireDropdown.style.display = "none";
-    }
+    shofcoDropdown.style.display = category === "shv" ? "block" : "none";
+    hireDropdown.style.display = category === "hrv" ? "block" : "none";
 }
+
 function handleSubmit(event) {
     event.preventDefault(); // Prevent default form submission
 
@@ -57,7 +46,7 @@ function handleSubmit(event) {
         return; // Stop further execution
     }
 
-    // Check vehicle selection
+    // Check if a specific vehicle is selected
     if (vehicleCategory === "shv" && shvList === "-") {
         alert("Please select a SHOFCO vehicle.");
         return;
@@ -90,33 +79,14 @@ function handleSubmit(event) {
         });
 }
 
-document.getElementById("submissionForm").addEventListener("submit", handleSubmit);
 
-// Handle form submission
-document.getElementById("myForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent the default form submission
+document.addEventListener("DOMContentLoaded", () => {
+    generateBookingID();
 
-    // Simulate form submission (e.g., send to Google Form)
-    // Assuming the submission is successful, enable the Close button
-    setTimeout(() => {
-        alert("Data submitted successfully!");
-        document.getElementById("closeButton").disabled = false; // Enable close button
-    }, 1000); // Simulate a 1-second delay for submission
-
-    // You can call the real form submission here:
-    // document.getElementById("myForm").submit(); 
-});
-
-document.getElementById("closeButton").addEventListener("click", function () {
-    if (confirm("Are you sure you want to close this window? Make sure all data is submitted.")) {
-        if (typeof window.close === "function") {
+    document.getElementById("submissionForm").addEventListener("submit", handleSubmit);
+    document.getElementById("closeButton").addEventListener("click", () => {
+        if (confirm("Are you sure you want to close this window?")) {
             window.close();
-        } else {
-            alert("Please close this tab manually.");
         }
-    }
+    });
 });
-
-
-
-
