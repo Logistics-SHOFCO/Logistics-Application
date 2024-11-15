@@ -11,6 +11,41 @@ function generateBookingID() {
 window.onload = function() {
     generateBookingID();
 };
+function validateForm(event) {
+                // Prevent the form from submitting
+                event.preventDefault();
+
+                // Get form values
+                const bid = document.getElementById("bid").value;
+                const email = document.getElementById("email").value;
+                const ddate = document.getElementById("ddate").value;
+                const rdate = document.getElementById("rdate").value;
+                const passno = document.getElementById("passno").value;
+                const dest = document.getElementById("dest").value;
+                const dept = document.getElementById("dept").value;
+                const pop = document.getElementById("pop").value;
+                const tin = document.getElementById("tin").value;
+                const tout = document.getElementById("tout").value;
+                const vehicleCategory = document.getElementById("vehicle-category").value;
+                const shvList = document.getElementById("shv-list").value;
+                const hrvList = document.getElementById("hrv-list").value;
+
+                // Check if required fields are filled
+                if (!bid || !email || !ddate || !rdate || !passno || !dest || !dept || !pop || !tin || !tout || !vehicleCategory) {
+                    alert("All fields required!");
+                    return false;
+                }
+
+                // Check if a vehicle is selected based on category
+                if (vehicleCategory === "shv" && shvList === "-") {
+                    alert("Please select a SHOFCO vehicle.");
+                    return false;
+                }
+                if (vehicleCategory === "hrv" && hrvList === "-") {
+                    alert("Please select a Hire vehicle.");
+                    return false;
+                }
+            }
 
 function showVehicleList() {
     const category = document.getElementById("vehicle-category").value;
