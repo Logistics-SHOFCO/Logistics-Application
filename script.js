@@ -1,8 +1,14 @@
 function handleCredentialResponse(response) {
-    const userData = jwt_decode(response.credential);
-    const userEmail = userData.email;
-    document.getElementById("email").value = userEmail;
+    try {
+        const userData = jwt_decode(response.credential);
+        const userEmail = userData.email;
+        document.getElementById("email").value = userEmail;
+        console.log("User email captured:", userEmail); // Debug
+    } catch (error) {
+        console.error("Failed to capture email:", error);
+    }
 }
+
 function generateBookingID() {
     const bookingID = Math.floor(100000 + Math.random() * 900000);
     document.getElementById("bid").value = bookingID;
