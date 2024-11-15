@@ -14,13 +14,42 @@ function generateBookingID() {
     document.getElementById("bid").value = bookingID;
 }
 
+document.getElementById("vehicle-category").addEventListener("change", showVehicleList);
+
 function showVehicleList() {
     const category = document.getElementById("vehicle-category").value;
     const shofcoDropdown = document.getElementById("shofco-vehicles");
     const hireDropdown = document.getElementById("hire-vehicles");
-    shofcoDropdown.style.display = category === "shv" ? "block" : "none";
-    hireDropdown.style.display = category === "hrv" ? "block" : "none";
+
+    if (category === "shv") {
+        shofcoDropdown.style.display = "block";
+        hireDropdown.style.display = "none";
+        document.getElementById("hrv-list").value = "-";
+    } else if (category === "hrv") {
+        hireDropdown.style.display = "block";
+        shofcoDropdown.style.display = "none";
+        document.getElementById("shv-list").value = "-";
+    } else {
+        shofcoDropdown.style.display = "none";
+        hireDropdown.style.display = "none";
+    }
+
+    // Force a re-check for the dropdown
+    validateVehicleSelection();
 }
+
+function validateVehicleSelection() {
+    const category = document.getElementById("vehicle-category").value;
+    const shvList = document.getElementById("shv-list").value;
+    const hrvList = document.getElementById("hrv-list").value;
+
+    if (category === "shv" && shvList === "-") {
+        alert("Please select a SHOFCO vehicle.");
+    } else if (category === "hrv" && hrvList === "-") {
+        alert("Please select a Hire vehicle.");
+    }
+}
+
 
 function handleSubmit(event) {
      if (event && event.preventDefault) {
@@ -88,9 +117,14 @@ document.addEventListener("DOMContentLoaded", () => {
     generateBookingID();
 
     document.getElementById("submissionForm").addEventListener("submit", handleSubmit);
-    document.getElementById("closeButton").addEventListener("click", () => {
-        if (confirm("Are you sure you want to close this window?")) {
+    document.getElementById("closeButton").addEventListener("click", function () {
+    if (confirm("Are you sure you want to close this window? Make sure all data is submitted.")) {
+        try {
             window.close();
+        } catch (e) {
+            alert("Please close this tab manually.");
         }
-    });
+    }
+});
+
 });
