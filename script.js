@@ -60,5 +60,29 @@ document.getElementById("closeButton").addEventListener("click", function () {
         alert("Closing canceled. Please complete the submission.");
     }
 });
+// Handle form submission
+document.getElementById("myForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Simulate form submission (e.g., send to Google Form)
+    // Assuming the submission is successful, enable the Close button
+    setTimeout(() => {
+        alert("Data submitted successfully!");
+        document.getElementById("closeButton").disabled = false; // Enable close button
+    }, 1000); // Simulate a 1-second delay for submission
+
+    // You can call the real form submission here:
+    // document.getElementById("myForm").submit(); 
+});
+
+// Close the window/tab after form submission
+document.getElementById("closeButton").addEventListener("click", function() {
+    if (confirm("Are you sure you want to close this window? Make sure all data is submitted.")) {
+        window.close();
+    } else {
+        alert("Closing canceled. Please complete the submission.");
+    }
+});
+
 
 
